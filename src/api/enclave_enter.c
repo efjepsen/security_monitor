@@ -122,8 +122,10 @@ api_result_t sm_internal_enclave_enter (enclave_id_t enclave_id, thread_id_t thr
 */
  
   // Set up MSTATUS to launch enclave in S mode
-  // Set TVM to 1, MPP to 1 (S mode), MPIE to 0, SIE to 1 and UIE to 0
+  // Set TVM to 1, FS to 1 (FOps On), MPP to 1 (S mode), MPIE to 0, SIE to 1 and UIE to 0
   mstatus_tmp |= MSTATUS_TVM_MASK;
+  mstatus_tmp &= (~MSTATUS_FS_MASK);
+  mstatus_tmp |= 1ul << MSTATUS_FS_OFFSET;
   mstatus_tmp &= (~MSTATUS_MPP_MASK);
   mstatus_tmp |= 1ul << MSTATUS_MPP_OFFSET;
   mstatus_tmp &= (~MSTATUS_MPIE_MASK);
