@@ -7,9 +7,9 @@ extern uint8_t trap_vector_from_untrusted;
 void platform_core_init (void) {
   // Set the interrupt handler address
   write_csr(mtvec, ( ((uint64_t)(&trap_vector_from_untrusted))&(~0x3L) ));
-  
+
   // Initialize MSTATUS
-  write_csr(mstatus, 0);
+  write_csr(mstatus, 0x2000); // TODO: Insecure. Enable FOPs for baseline benchmarking
 
   // Enable user/supervisor use of perf counters
   write_csr(scounteren, -1);
